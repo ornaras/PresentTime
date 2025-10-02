@@ -1,6 +1,5 @@
 package ezo.ornaras.presenttime;
 
-import ezo.ornaras.presenttime.database.*;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -11,7 +10,6 @@ import java.util.*;
 public final class PresentTime extends JavaPlugin {
 
     public Map<UUID,BukkitTask> clients = new HashMap<>();
-    public IDatabase db;
     public static PresentTime singleton;
 
     public void createConfig(){
@@ -26,33 +24,6 @@ public final class PresentTime extends JavaPlugin {
     public void onEnable() {
         createConfig();
         singleton = this;
-        switch (getConfig().getString("database.type").toLowerCase()){
-            case "mysql":
-                db = new MySQL();
-                break;
-            case "mariadb":
-                db = new MariaDB();
-                break;
-            case "postgresql":
-                db = new PostgreSQL();
-                break;
-            default:
-                db = new SQLite();
-                break;
-        }
-        if (db.getClass().equals(SQLite.class)) {
-            db.Connect(new String[]{
-                    getConfig().getString("database.user"),
-                    getConfig().getString("database.pass")});
-        }else {
-            db.Connect(new String[]{
-                    getConfig().getString("database.host"),
-                    getConfig().getString("database.port"),
-                    getConfig().getString("database.name"),
-                    getConfig().getString("database.user"),
-                    getConfig().getString("database.pass")});
-        }
-        db.CreateTable();
         for (World w: getServer().getWorlds()) {
             if(!getConfig().getStringList("disabledWorld").contains(w.getName()))
                 w.setGameRuleValue("doDaylightCycle", "false");

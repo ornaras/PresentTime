@@ -4,7 +4,6 @@
 **Technology stack**
 * *Build*: Maven
 * *SDK*: Spigot
-* *DB*: MariaDB, MySQL, PostgreSQL, SQLite
 * *API*: [IP Geolocation API](https://ip-api.com/)
 
 **Screenshots:** *TODO*
