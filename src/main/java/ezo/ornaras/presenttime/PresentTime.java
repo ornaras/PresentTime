@@ -24,15 +24,16 @@ public final class PresentTime extends JavaPlugin {
     public void onEnable() {
         createConfig();
         singleton = this;
+        Settings.load();
         for (World w: getServer().getWorlds()) {
-            if(!getConfig().getStringList("disabledWorld").contains(w.getName()))
+            if(!Settings.getDisabledWorld().contains(w.getName()))
                 w.setGameRuleValue("doDaylightCycle", "false");
         }
         new BukkitRunnable() {
             @Override
             public void run() {
                 for (World w: getServer().getWorlds()) {
-                    if(!getConfig().getStringList("disabledWorld").contains(w.getName()))
+                    if(!Settings.getDisabledWorld().contains(w.getName()))
                         w.setTime(w.getTime()==6000?18000:6000);
                 }
             }
@@ -44,7 +45,7 @@ public final class PresentTime extends JavaPlugin {
     @Override
     public void onDisable() {
         for (World w: getServer().getWorlds()) {
-            if(!getConfig().getStringList("disabledWorld").contains(w.getName()))
+            if(!Settings.getDisabledWorld().contains(w.getName()))
                 w.setGameRuleValue("doDaylightCycle", "true");
         }
     }
