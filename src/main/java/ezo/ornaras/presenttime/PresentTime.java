@@ -6,7 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public final class PresentTime extends JavaPlugin {
@@ -77,9 +76,5 @@ public final class PresentTime extends JavaPlugin {
             if(!getConfig().getStringList("disabledWorld").contains(w.getName()))
                 w.setGameRuleValue("doDaylightCycle", "true");
         }
-        db.Disconnect();
-        try {
-            getConfig().save(getDataFolder() + File.separator + "config.yml");
-        } catch (IOException ignored) {}
     }
 }
